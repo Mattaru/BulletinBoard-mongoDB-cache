@@ -24,6 +24,7 @@ services:
       - DATABASE_HOST = 'mongodb'
       - DATABASE_PORT = 27017
       - DEBUG = False
+      - ALLOWED_HOSTS = '18.159.103.63:8000'
     ports:
       - '8000:8000'
     depends_on:
