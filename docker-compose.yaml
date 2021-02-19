@@ -12,7 +12,7 @@ services:
     ports:
       - '6019:6379'
   web:
-    build: ./bb_app
+    build: .
     command: /app/bb_app/gunicorn bb_app.wsgi.application -w 2 -b :8000
     volumes:
       - .:/app/bb_app
