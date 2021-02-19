@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    restart: unless-stopped
+  redis:
+    image: redis:latest
+    environment:
+      - REDIS_LOCATION = 'redis://redis:6379/0'
+    ports:
+      - '6019:6379'
+  web:
+    build: .
+    command: /app/gunicorn bb_app.wsgi.application -w 2 -b :8000
+    volumes:
+      - .:/app
+    environment:
+      - SECRET_KEY = '_@1c*5z&cr5x1%x4ih$tv4+l7_@fr=#!0rylk246!-#1plcy7^'
+      - DATABASE_NAME = 'BulletinBoard'
+      - DATABASE_HOST = 'mongodb'
+      - DATABASE_PORT = 27017
+      - DEBUG = False
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - redis

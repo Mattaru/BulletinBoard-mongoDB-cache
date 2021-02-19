@@ -1,0 +1,5 @@
+*.pyc
+.idea
+.git
+bb_app/b_board/__pycache__
+bb_app/bb_app/__pycache__
