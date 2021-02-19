@@ -9,24 +9,23 @@ services:
     restart: unless-stopped
   redis:
     image: redis:latest
-    environment:
-      - REDIS_LOCATION = 'redis://redis:6379/0'
     ports:
       - '6019:6379'
   web:
-    build: .
-    command: /app/gunicorn bb_app.wsgi.application -w 2 -b :8000
+    build: ./bb_app
+    command: /app/bb_app/gunicorn bb_app.wsgi.application -w 2 -b :8000
     volumes:
-      - .:/app
+      - .:/app/bb_app
     environment:
-      - SECRET_KEY = '_@1c*5z&cr5x1%x4ih$tv4+l7_@fr=#!0rylk246!-#1plcy7^'
-      - DATABASE_NAME = 'BulletinBoard'
-      - DATABASE_HOST = 'mongodb'
-      - DATABASE_PORT = 27017
-      - DEBUG = False
-      - ALLOWED_HOSTS = '18.159.103.63:8000'
+      - SECRET_KEY='_@1c*5z&cr5x1%x4ih$tv4+l7_@fr=#!0rylk246!-#1plcy7^'
+      - DATABASE_NAME='BulletinBoard'
+      - DATABASE_HOST='mongodb'
+      - DATABASE_PORT=27017
+      - DEBUG=False
+      - ALLOWED_HOSTS='18.159.103.63:8000'
+      - REDIS_LOCATION='redis://redis:6379/0'
     ports:
       - '8000:8000'
     depends_on:
-      - db
+      - mongodb
       - redis
