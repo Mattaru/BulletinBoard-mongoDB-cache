@@ -13,7 +13,7 @@ services:
       - '6019:6379'
   web:
     build: .
-    command: /app/bb_app/gunicorn bb_app.wsgi:application -w 2 -b :8000
+    command: /app/bb_app/gunicorn bb_app.wsgi:application -w 2 -b 127.0.0.1:8000
     volumes:
       - .:/app/bb_app
     environment:
